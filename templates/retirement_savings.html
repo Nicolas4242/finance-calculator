@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}Retirement Calculators{% endblock %}
+{% block content %}
+<h2>Retirement Calculators</h2>
+
+<div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+    <!-- Monthly Payment Calculator -->
+    <div style="flex: 1; min-width: 300px;">
+        <h3>Calculate Monthly Savings</h3>
+        <form method="POST" action="/retirement_savings">
+            <input type="hidden" name="form_type" value="retirement_payment">
+            <input type="number" name="amount" placeholder="Retirement goal (€)" step="100" required
+                   value="{{ request_form['amount'] if request_form and 'amount' in request_form else '' }}"><br>
+            <input type="number" name="current" placeholder="Current savings (€)" step="100" required
+                   value="{{ request_form['current'] if request_form and 'current' in request_form else '' }}"><br>
+            <input type="number" name="rate" placeholder="Annual return (%)" step="0.1" required
+                   value="{{ request_form['rate'] if request_form and 'rate' in request_form else '' }}"><br>
+            <input type="number" name="years" placeholder="Years" required
+                   value="{{ request_form['years'] if request_form and 'years' in request_form else '' }}"><br>
+            <button type="submit">Calculate</button>
+        </form>
+        {% if monthly_saving_needed is not none %}
+            <p><strong>Monthly payment:</strong> {{ monthly_saving_needed }} €</p>
+        {% endif %}
+    </div>
+
+    <!-- Growth Calculator -->
+    <div style="flex: 1; min-width: 300px;">
+        <h3>Estimate Total Savings</h3>
+        <form method="POST" action="/retirement_savings">
+            <input type="hidden" name="form_type" value="retirement_growth">
+            <input type="number" name="monthly" placeholder="Monthly savings (€)" step="10" required
+                   value="{{ request_form['monthly'] if request_form and 'monthly' in request_form else '' }}"><br>
+              <input type="number" name="current_growth" placeholder="Current savings (€)" step="100" required
+                   value="{{ request_form['current_growth'] if request_form and 'current_growth' in request_form else '' }}"><br>
+            <input type="number" name="rate_growth" placeholder="Annual return (%)" step="0.1" required
+                   value="{{ request_form['rate_growth'] if request_form and 'rate_growth' in request_form else '' }}"><br>
+            <input type="number" name="years_growth" placeholder="Years" required
+                   value="{{ request_form['years_growth'] if request_form and 'years_growth' in request_form else '' }}"><br>
+            <button type="submit">Calculate</button>
+        </form>
+        {% if future_result is not none %}
+            <p><strong>Estimated total savings:</strong> {{ future_result }} €</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block info %}
+<section>
+  <h3>Understand Your Retirement Strategy</h3>
+  <p>Use these two calculators to plan your retirement savings effectively:</p>
+
+  <h4>1. Calculate Monthly Savings</h4>
+  <p>
+    This calculator helps you find out how much you need to save every month to reach your retirement goal,
+    considering your current savings, expected annual return, and the number of years until retirement.
+  </p>
+
+  <h4>2. Estimate Total Savings</h4>
+  <p>
+    This calculator estimates how much your current savings plus regular monthly contributions will grow to by retirement,
+    based on the same interest and time assumptions.
+  </p>
+  
+
+</section>
+
+{% endblock %}
+
+{% block faq %}
+<h3>Frequently Asked Questions</h3>
+<div class="faq-item">
+  <button class="faq-question">
+    How much money should I have before retirement? <span class="arrow">˅</span>
+  </button>
+  <div class="faq-answer">
+    <p>The answer to this question depends of many factors, the most important once are :</p>
+    <ul>
+        <li>Your retirement age </li>
+        <li>Your life expectancy </li>
+        <li>Your current lifestyle </li>
+        <li>Your retirement lifestyle </li>
+        <li>Your retirement income sources </li>
+        <li>The country you live in</li>
+        <li>Your marital status</li>
+    </ul>
+  </div>
+</div>
+<div class="faq-item">
+  <button class="faq-question">
+    What is the 4% rule? <span class="arrow">˅</span>
+  </button>
+  <div class="faq-answer">
+    <p>The 4% rule is a guideline for retirement withdrawals. It suggests that you can withdraw 4% of your retirement savings each year without running out of money for at least 30 years. This rule is based on historical market performance and assumes a balanced portfolio of stocks and bonds.</p>
+  </div>
+</div>
+<div class="faq-item">
+  <button class="faq-question">
+    What is the best age to start saving for retirement? <span class="arrow">˅</span>
+  </button>
+  <div class="faq-answer">
+    <p>The earlier you start saving for retirement, the better. Starting in your 20s or 30s allows you to take advantage of compound interest, which can significantly increase your savings over time. However, it's never too late to start saving, and even small contributions can make a difference.</p>
+  </div>
+</div>
+<div class="faq-item">
+  <button class="faq-question">
+    What is the difference between a 401(k) and an IRA? <span class="arrow">˅</span>
+  </button>
+  <div class="faq-answer">
+    <p>A 401(k) is an employer-sponsored retirement plan that allows employees to save for retirement with pre-tax dollars. An IRA (Individual Retirement Account) is a personal retirement account that individuals can open independently. Both have tax advantages, but contribution limits and withdrawal rules differ.</p>
+  </div>
+
+{% endblock %}
+

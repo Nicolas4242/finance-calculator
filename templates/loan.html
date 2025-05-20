@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title %}Loan Calculator{% endblock %}
+{% block content %}
+<h2>Loan Calculator</h2>
+<form method="POST" action="/loan">
+    <input type="number" name="loan_amount" placeholder="Loan Amount (€)" step="100" required
+           value="{{ request_form['loan_amount'] if request_form and 'loan_amount' in request_form else '' }}"><br>
+    <input type="number" name="interest_rate" placeholder="Interest Rate (%)" step="0.1" required
+           value="{{ request_form['interest_rate'] if request_form and 'interest_rate' in request_form else '' }}"><br>
+    <input type="number" name="years_loan" placeholder="Years" required
+           value="{{ request_form['years_loan'] if request_form and 'years_loan' in request_form else '' }}"><br>
+    <button type="submit">Calculate</button>
+</form>
+
+{% if loan_result is not none %}
+    <p><strong>Total Amount Paid:</strong> {{ loan_result }} €</p>
+    <p><strong>Monthly Payment:</strong> {{ monthly_loan_result }} €</p>
+{% endif %}
+{% endblock %}
+
+{% block info %}
+<h3>What is a Loan?</h3>
+<p>
+Loan repayment refers to the monthly amount you pay back when you borrow money. This includes both the principal (amount borrowed) and the interest.
+</p>
+<p>
+The monthly payment is calculated using the formula for annuities:
+<br>
+<code>Monthly Payment = P × r / (1 - (1 + r)^-n)</code>
+</p>
+<p>
+Where <code>P</code> is the loan amount, <code>r</code> is the monthly interest rate, and <code>n</code> is the total number of months.
+</p>
+{% endblock %}
+{% block faq %}
+<h3>Frequently Asked Questions</h3>
+<div class="faq-item">
+  <button class="faq-question">
+    What is an interest rate? <span class="arrow">˅</span>
+  </button>
+  <div class="faq-answer">
+    <p>An interest rate is the cost of borrowing money, expressed as a percentage of the loan amount. It represents what the lender charges you for using their money. In the early stages of repaying a loan, a large portion of your payments typically goes toward interest rather than the loan principal itself.</p>
+  </div>
+</div>
+<div class="faq-item">
+  <button class="faq-question">
+    Can I repay my loan early? <span class="arrow">˅</span>
+  </button>
+  <div class="faq-answer">
+    <p>Yes, but some lenders may charge a prepayment penalty. Always check your loan terms before early repayment.</p>
+  </div>
+</div>
+<div class="faq-item">
+  <button class="faq-question">
+    What happens if I miss a payment? <span class="arrow">˅</span>
+  </button>
+  <div class="faq-answer">
+    <p>Missing a payment can lead to late fees, increased interest rates, and damage to your credit score. It's important to communicate with your lender if you're having trouble making payments.</p>
+  </div>
+ </div> 
+<div class="faq-item">
+  <button class="faq-question">
+     What do I need to know before asking for a loan?<span class="arrow">˅</span>
+  </button>
+  <div class="faq-answer">
+    <p>You need to know: how much money you're going to need, what your credit profile looks like, what you're going to use the money for, how you will repay your loan, can you put up collateral, ...</p>
+  </div>
+</div>
+{% endblock %}

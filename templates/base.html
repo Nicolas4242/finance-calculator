@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <title>{% block title %}Finance Tool{% endblock %}</title>
+    <style>
+        /* for computer and tablet */
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 40px;
+            background-color: #f9f9f9;
+            color: #333;
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+        header h1 {
+            font-family: 'Lato', sans-serif;
+            font-size: 3em;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        header .header-content {
+            display: flex;
+            justify-content: center; /* Center the content horizontally */
+            align-items: center;     /* Align items vertically */
+            flex-direction: row;
+            gap: 20px;               /* Space between items */
+        }
+
+        header .header-content img {
+            width: 250px;
+            height: 250px;
+            border-radius: 10px;
+        }
+        header .header-content img:first-child {
+            margin-right: 150px;
+            margin-left: 10px;
+        }
+
+        header .header-content img:last-child {
+            margin-left: 150px;
+            margin-right: 10px;
+        }
+        header .title-quote {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* center title and quote horizontally */
+        max-width: 100px;
+        }
+
+        .quote {
+        font-style: italic;
+        font-size: 1rem;
+        color: #555;
+        margin-top: 8px;
+        text-align: center;
+        }
+
+        header {
+      
+            color: rgb(26, 158, 3);
+            padding: 10px 20px;
+            border-radius: 0px;
+            text-align: center;
+            
+        }
+        nav {
+            margin: 20px 0;
+            text-align: center;
+        }
+        nav a {
+            text-decoration: none;
+            margin-right: 10px;
+            padding: 10px 15px;
+            background-color: #ddd;
+            color: #000;
+            border-radius: 0px;
+        }
+        nav a.active {
+            background-color: #333;
+            color: white;
+        }
+        /* Hover effect only if not active */
+        nav a:not(.active):hover {
+            transform: scale(1.1); /* slightly bigger */
+            background-color: #ccc; /* optional: slightly darker on hover */
+            font-weight : bold; /* optional: make it bold on hover */
+        }
+        .container {
+            margin: 0 20px;
+            display: flex;
+            justify-content: center;
+            gap :40px;
+            width: calc(100% - 40px); /* 100% minus 20px left + 20px right */
+            background: white;
+            padding: 20px;
+            border-radius: 0px;
+            box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.507);
+            text-align: center;
+            box-sizing: border-box;
+            
+       
+
+        }
+        input, button {
+            
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            border: 1px solid #0a51eb;
+            border-radius: 6px;
+            align-self: center;
+            background-color: #0a51eb22;
+        }
+        .content-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .form-section {
+            flex: 1;
+            min-width: 320px;
+            max-width: 400px;
+        }
+
+        .info-section {
+            flex: 1;
+            min-width: 250px;
+            max-width: 400px;
+            text-align: left;
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        /* create a switch for dark mode */
+        /* Toggle switch container */
+        .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      
+        }
+
+        /* Hide the default checkbox */
+        .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        }
+
+        /* Slider */
+        .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 34px;
+        }
+
+        /* Circle inside the slider */
+        .slider:before {
+        content: "🌞"; /* default: sun */
+        position: absolute;
+        
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+        }
+
+        /* When checked */
+        input:checked + .slider {
+        
+        background-color: #0a51eb;
+        }
+
+        input:checked + .slider:before {
+        content: "🌙";
+        transform: translateX(26px);
+        }
+        /* Default light theme (already in your code) */
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Dark Mode styles */
+        body.dark-mode {
+            background-color: #1e1e1e;
+            color: #f1f1f1;
+        }
+
+        body.dark-mode .container {
+            background-color: #2c2c2c;
+            box-shadow: 6px 6px 12px rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode nav a {
+            background-color: #444;
+            color: #eee;
+        }
+
+        body.dark-mode nav a.active {
+            background-color: #0a51eb;
+            color: white;
+        }
+
+        body.dark-mode input, 
+        body.dark-mode button {
+            background-color: #333;
+            color: white;
+            border-color: #0a51eb;
+        }
+        body.dark-mode .quote {
+            color: #bbb;
+        }
+        body.dark-mode .info-section {
+            background-color: #444;
+            color: #eee;
+        }
+        .form-sections {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        justify-content: center;
+        flex: 1;
+        min-width: 320px;
+        max-width: 800px;
+        }
+
+        .form-box {
+        flex: 1 1 300px;
+        }
+        /* FAQ element */
+
+        .faq-section {
+            text-align: left;
+        }
+        .faq-item {
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+        padding: 10px 0;
+        }
+
+        .faq-question {
+        width: 100%;
+        background: none;
+        border: none;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        }
+
+        .faq-question .arrow {
+        transition: transform 0.3s ease;
+        }
+
+        .faq-question.active .arrow {
+        transform: rotate(180deg);
+        }
+
+        .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        }
+
+        .faq-answer.open {
+        max-height: 200px; /* adjust as needed */
+        }
+        
+
+        /* for mobile phone with smaller screen */
+        /* Mobile styles for screens smaller than 768px */
+        @media (max-width: 768px) {
+        /* Hide header images on phone */
+        header .header-content img {
+            display: none;
+        }
+
+        /* Make the header content stack vertically */
+        header .header-content {
+            flex-direction: column;
+            gap: 10px; /* smaller gap when stacked */
+        }
+
+        /* Fix title-quote max width for smaller screens */
+        header .title-quote {
+            max-width: 100%; /* allow full width */
+            padding: 0 20px;
+        }
+
+        /* Stack content-wrapper children vertically */
+        .content-wrapper {
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        /* Container padding and margin adjustments */
+        .container {
+            margin: 10px;
+            padding: 15px;
+            width: auto; /* let it use full width */
+        }
+
+        /* Make inputs and buttons narrower on phone */
+        input, button {
+            max-width: 100%;
+        }
+        /* Navigation links stacked vertically and full width */
+        nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* center buttons horizontally */
+            gap: 10px; /* space between buttons */
+        }
+
+        nav a {
+            display: block;
+            width: 90%;       /* almost full width */
+            max-width: 400px; /* optional max width */
+            padding: 15px 0;  /* bigger clickable area */
+            margin: 0;        /* remove right margin */
+            text-align: center;
+            border-radius: 8px; /* slightly rounded for mobile */
+        }
+        
+        }
+
+    </style>
+</head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A handy finance calculator with loan, interest, retirement savings, and net worth estimators.">
+  <meta name="author" content="Your Name or Company">
+  <meta name="keywords" content="finance, calculator, loan calculator, interest calculator, retirement savings, net worth">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX'); // Replace with your actual tracking ID
+  </script>
+    <!-- End Google Analytics -->
+<body>
+    <header>
+        
+        <div class="header-content">
+            <img src="/static/calculette.jpg" alt="Left Logo">
+           <div class="'title-quote">   <!-- the ' needs to stay cause otherwise the display goes to shit */ -->
+                <h1>Finance Calculator</h1>
+                <p class="quote">“Someone’s sitting in the shade today because someone planted a tree a long time ago.” — Warren Buffett</p>
+            </div>
+            <img src="/static/money_tree.jpg" alt="Right Logo">
+        </div>
+    </header>
+
+    <nav>
+        <a href="/loan" class="{% if active == 'loan' %}active{% endif %}">Loan Calculator</a>
+        <a href="/calculator" class="{% if active == 'interest' %}active{% endif %}">Interest Calculator</a>
+        <a href="/retirement_savings" class="{% if active == 'retirement' %}active{% endif %}">Retirement Savings</a>
+        <a href="/networth" class="{% if active == 'networth' %}active{% endif %}">Networth Estimator</a>
+        <label class="switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="slider round"></span>
+        </label>
+    </nav>
+
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="form-section">
+                {% block content %}{% endblock %}
+            </div>
+            <div class="info-section">
+                {% block info %}{% endblock %}
+            </div>
+            <div class="faq-section">
+               {% block faq %}{% endblock%}
+            </div>   
+        </div>
+    </div>
+    <!-- // create a darkmode switch\ -->
+    <script>
+    const toggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+
+    // Load saved mode
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        body.classList.add('dark-mode');
+        toggle.checked = true;
+    }
+
+    toggle.addEventListener('change', () => {
+        body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', body.classList.contains('dark-mode') ? 'enabled' : 'disabled');
+    });
+    
+    document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const answer = btn.nextElementSibling;
+        const isOpen = answer.classList.contains('open');
+
+        if (isOpen) {
+            answer.classList.remove('open');
+            btn.classList.remove('active');
+        } else {
+            answer.classList.add('open');
+            btn.classList.add('active');
+        }
+    });
+});
+
+
+    </script>
+</body>
+</html>

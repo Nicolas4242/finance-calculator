@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Interest Calculator{% endblock %}
+{% block content %}
+<h2>Compound Interest Calculator</h2>
+<form method="POST" action="/calculator">
+    <input type="number" name="amount" placeholder="Initial Amount (€)" step="100" required
+           value="{{ request_form['amount'] if request_form and 'amount' in request_form else '' }}"><br>
+    <input type="number" name="rate" placeholder="Annual Rate (%)" step="1" required
+           value="{{ request_form['rate'] if request_form and 'rate' in request_form else '' }}"><br>
+    <input type="number" name="years" placeholder="Years" required
+           value="{{ request_form['years'] if request_form and 'years' in request_form else '' }}"><br>
+    <button type="submit">Calculate</button>
+</form>
+
+{% if interest_result is not none %}
+    <p><strong>Future Value:</strong> {{ interest_result }} €</p>
+{% endif %}
+{% endblock %}
+
+{% block info %}
+<h3>What is Compound Interest?</h3>
+<p>
+Compound interest is the interest you earn not only on your initial investment, but also on the interest accumulated over time. 
+This means your money grows faster the longer it's invested.
+</p>
+<p>
+It's calculated using the formula:
+<br>
+<code>Future Value = Principal × (1 + Rate / 100) ^ Years</code>
+</p>
+<p>
+For example, if you invest €1,000 at an annual rate of 5% for 10 years, the value grows to:<br>
+<code>1000 × (1 + 0.05)^10 = €1,628.89</code>
+</p>
+{% endblock %}
+{% block faq %}
+<h3>Frequently Asked Questions</h3>
+<div class="faq-item">
+  <button class="faq-question">
+    What is an interest rate? <span class="arrow">˅</span>
+  </button>
+  <div class="faq-answer">
+    <p>An interest rate is the cost of borrowing money, expressed as a percentage of the loan amount. It represents what the lender charges you for using their money. In the early stages of repaying a loan, a large portion of your payments typically goes toward interest rather than the loan principal itself.</p>
+  </div>
+</div>
+<div class="faq-item">
+       <button class = "faq-question">
+              Does my investment benefit from compound interest? <span class="arrow">˅</span>
+       </button>
+       <div class="faq-answer">
+              <p> Yes, every investment can benefit from compound interest as long as you invest your earnings back into your original investment. For instance, if you invest in a stock that gives dividends at the end of the year, than to benefit from compound interest, you'll need to invest the dividend to.</p>
+       </div>
+</div>
+<div class="faq-item">
+  <button class="faq-question">
+    How often is interest compounded? <span class="arrow">˅</span>
+  </button>
+  <div class="faq-answer">
+    <p>Interest can be compounded annually, semi-annually, quarterly, monthly, or daily. The more frequently interest is compounded, the more you earn. Most of the time we speak about yearly compound interest.</p>
+  </div>
+</div>
+<div class="faq-item">
+  <button class="faq-question">
+    Does interest rate change over the years? <span class="arrow">˅</span>
+  </button>
+  <div class="faq-answer">
+    <p>This depend on your investment. I recommend you check this on your investment contract. In most cases, interest rates vary depending of the current economy or how well your precice investment is doing.</p>
+  </div>
+  </div>
+{% endblock %}

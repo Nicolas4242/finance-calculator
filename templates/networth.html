@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}Loan Calculator{% endblock %}
+{% block content %}
+<h2>net worth estimator</h2>
+<form method="POST" action="/networth">
+    <input type="number" name="real_estate" placeholder="Real Estate (€)" step="1000" required
+           value="{{ request_form['real_estate'] if request_form and 'real_estate' in request_form else '' }}"><br>
+    <input type="number" name="Business" placeholder="Business (€)" step="1000" required
+           value="{{ request_form['Business'] if request_form and 'Business' in request_form else '' }}"><br>
+    <input type="number" name="Bank" placeholder="Bank account (€)" step="0.1"required
+           value="{{ request_form['Bank'] if request_form and 'Bank' in request_form else '' }}"><br>
+    <input type="number" name="Stock" placeholder="Stock investments (€)" step="0.1" required
+           value="{{ request_form['Stock'] if request_form and 'Stock' in request_form else '' }}"><br>
+    <input type="number" name="Crypto" placeholder="Crypto investments (€)" step="0.1" required
+           value="{{ request_form['Crypto'] if request_form and 'Crypto' in request_form else '' }}"><br>
+    <input type="number" name="Cash" placeholder="Cash (€)" step="0.1" required
+           value="{{ request_form['Cash'] if request_form and 'Cash' in request_form else '' }}"><br>
+    <input type="number" name="Debt" placeholder="Debt (€)" step="0.1" required
+           value="{{ request_form['Debt'] if request_form and 'Debt' in request_form else '' }}"><br>
+    <input type="number" name="Credit" placeholder="Credit (€)" step="0.1" required
+           value="{{ request_form['Credit'] if request_form and 'Credit' in request_form else '' }}"><br>
+    <button type="submit">Calculate</button>
+</form>
+
+{% if networth_result is not none %}
+    <p><strong>Estimated net worth:</strong> {{ networth_result }} €</p>
+    
+{% endif %}
+{% endblock %}
+
+{% block info %}
+<h3>What does net worth mean?</h3>
+<p>Net worth is the value of an individual's or company's assets minus their liabilities. The figure for net worth provides a snapshot of a person's or company's financial position and well-being.</p>
+{% endblock %}
+{% block faq %}
+<h3>Frequently Asked Questions</h3>
+
+<div class="faq-item">
+  <button class="faq-question">
+    Is a negative net worth bad? <span class="arrow">˅</span>
+  </button>
+  <div class="faq-answer">
+    <p>Yes, having a negative net worth is generally not ideal, as it means you owe more than the total value of everything you own. However, it's quite common to experience a period of negative net worth, especially when you're young — for example, due to student loans or taking out a mortgage to buy a home. The important thing is to be aware of your financial situation and take steps to improve it over time. Living frugally and managing your spending wisely can help you gradually move toward a positive net worth. Our budget calculator can help you find out how much money you can save on a monthly base.</p>
+  </div>
+</div>
+<div class="faq-item">
+  <button class="faq-question">
+    What are the average net worth's in the USA? <span class="arrow">˅</span>
+  </button>
+  <div class="faq-answer">
+    <p>The average net worth by age class are :</p>
+    <ul>
+        <li>under 35 : $183,500</li>
+        <li>35-44 : $549,600</li>
+        <li>45-54 : $975,800</li>
+        <li>55-64 : $1,566,900</li>
+        <li>65-74 : $1,794,600</li>
+        <li>75+ : $1,624,100</li>
+    </ul>
+    <p>These numbers are based on the Federal Reserve's Survey of Consumer Finances, which is conducted every three years.</p>
+    <p> Note that these values are averages wich means that few very wealthy people dope this values. The average person has a net worth well below those numbers.</p>
+  </div>
+ </div> 
+<div class="faq-item">
+  <button class="faq-question">
+     Who has the highest net worth?<span class="arrow">˅</span>
+  </button>
+  <div class="faq-answer">
+    <p>At the moment, the richest man on earth is Elon Musk with a current net worth of $424.8 Billion (05/20/2025).</p>
+  </div>
+</div>
+{% endblock %}
+
