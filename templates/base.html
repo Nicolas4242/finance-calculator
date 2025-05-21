@@ -412,16 +412,7 @@
   <meta name="author" content="Van Gorp Nicolas">
   <meta name="keywords" content="finance, calculator, loan calculator, interest calculator, retirement savings, net worth, budget,, investment, savings">
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX'); // Replace with your actual tracking ID
-  </script>
-
-    <!-- End Google Analytics -->
+  
 <div id="cookie-popup" style="display: none;">
   <div id="cookie-banner">
     <p>
@@ -514,6 +505,9 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+    // if (getCookie('cookieConsent')) {
+    //     document.getElementById('cookie-popup').style.display = 'block';
+    // }
     if (!getCookie('cookieConsent')) {
         document.getElementById('cookie-popup').style.display = 'block';
     }
@@ -531,6 +525,24 @@
 
 
 });
+    // Function to dynamically add GA scripts
+    function loadGoogleAnalytics() {
+      // Load the GA script asynchronously
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-24XK7SR688";
+      document.head.appendChild(gaScript);
+
+      // Initialize GA after script loads
+      gaScript.onload = () => {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag; // Expose globally for other scripts if needed
+
+        gtag('js', new Date());
+        gtag('config', 'G-24XK7SR688');
+      };
+    }
 
 
     </script>
