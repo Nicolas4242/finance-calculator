@@ -179,7 +179,7 @@ def sitemap():
         xml += f"  </url>\n"
     xml += "</urlset>"
 
-    return Response(xml, mimetype='application/xml')
+    return Response(xml, mimetype='text/xml')
 
 @app.route('/robots.txt')
 def robots_txt():
