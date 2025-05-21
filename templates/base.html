@@ -349,30 +349,60 @@
         }
         /*cookie banner*/
 
-        #cookie-banner {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: #222;
-            color: #fff;
-            padding: 20px;
-            z-index: 9999;
-            text-align: center;
+        #cookie-popup {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 9999;
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
         }
 
-        .cookie-popup button {
-            margin: 0 10px;
-            padding: 10px 20px;
-            background-color: #0a51eb;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+        #cookie-banner p {
+        margin: 0 0 10px;
+        font-size: 0.95rem;
+        line-height: 1.4;
         }
 
-        .cookie-popup button:hover {
-            background-color: #0847d2;
-}
+        .cookie-buttons {
+        text-align: right;
+        }
+
+        .cookie-buttons button {
+        margin-left: 10px;
+        padding: 8px 14px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        }
+
+        #accept-cookies {
+        background-color: #0a51eb;
+        color: white;
+        }
+
+        #decline-cookies {
+        background-color: #ccc;
+        color: black;
+        }
+
+        body.dark-mode #cookie-popup {
+        background-color: #333;
+        color: #eee;
+        border-color: #555;
+        }
+
+        body.dark-mode #decline-cookies {
+        background-color: #555;
+        color: white;
+        }
 
 
     </style>
@@ -471,25 +501,33 @@
         }
     });
     // Cookie Banner Logic
-    
-    document.addEventListener("DOMContentLoaded", function () {
-    const cookieBanner = document.getElementById('cookie-banner');
-    const hasConsent = localStorage.getItem('cookieConsent');
 
-    if (!hasConsent) {
-        cookieBanner.style.display = 'block';
+    // Cookie popup logic
+    function setCookie(name, value, days) {
+    const expires = new Date(Date.now() + days*864e5).toUTCString();
+    document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
     }
 
-    document.getElementById('acceptCookies').addEventListener('click', function () {
-        localStorage.setItem('cookieConsent', 'accepted');
-        cookieBanner.style.display = 'none';
+    function getCookie(name) {
+    return document.cookie.split('; ').find(row => row.startsWith(name + '='))?.split('=')[1];
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+    if (!getCookie('cookieConsent')) {
+        document.getElementById('cookie-popup').style.display = 'block';
+    }
+
+    document.getElementById('accept-cookies').addEventListener('click', () => {
+        setCookie('cookieConsent', 'accepted', 365);
+        document.getElementById('cookie-popup').style.display = 'none';
     });
 
-    document.getElementById('declineCookies').addEventListener('click', function () {
-        localStorage.setItem('cookieConsent', 'declined');
-        cookieBanner.style.display = 'none';
+    document.getElementById('decline-cookies').addEventListener('click', () => {
+        setCookie('cookieConsent', 'declined', 365);
+        document.getElementById('cookie-popup').style.display = 'none';
     });
-});
+    });
+
 
 });
 
