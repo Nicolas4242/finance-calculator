@@ -181,5 +181,11 @@ def sitemap():
 
     return Response(xml, mimetype='application/xml')
 
+@app.route('/robots.txt')
+def robots_txt():
+    content = "User-agent: *\nAllow: /\nSitemap: https://finance-calculator-645x.onrender.com/sitemap.xml\n"
+    return Response(content, mimetype='text/plain')
+
+
 if __name__ == '__main__':
     app.run(debug=False)
