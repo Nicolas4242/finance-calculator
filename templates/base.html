@@ -347,6 +347,33 @@
         }
         
         }
+        /*cookie banner*/
+
+        #cookie-banner {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #222;
+            color: #fff;
+            padding: 20px;
+            z-index: 9999;
+            text-align: center;
+        }
+
+        .cookie-popup button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #0a51eb;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .cookie-popup button:hover {
+            background-color: #0847d2;
+}
+
 
     </style>
 </head>
@@ -363,7 +390,20 @@
     gtag('js', new Date());
     gtag('config', 'G-XXXXXXXXXX'); // Replace with your actual tracking ID
   </script>
+
     <!-- End Google Analytics -->
+<div id="cookie-banner" style="display:none;">
+  <div class="cookie-popup">
+    <p>
+      This site uses cookies to enhance your experience and analyze traffic. 
+      By clicking "Accept", you consent to the use of cookies.
+      <a href="/privacy" target="_blank">Learn more</a>.
+    </p>
+    <button id="acceptCookies">Accept</button>
+    <button id="declineCookies">Decline</button>
+  </div>
+</div>
+
 <body>
     <header>
         
@@ -430,6 +470,27 @@
             btn.classList.add('active');
         }
     });
+    // Cookie Banner Logic
+    
+    document.addEventListener("DOMContentLoaded", function () {
+    const cookieBanner = document.getElementById('cookie-banner');
+    const hasConsent = localStorage.getItem('cookieConsent');
+
+    if (!hasConsent) {
+        cookieBanner.style.display = 'block';
+    }
+
+    document.getElementById('acceptCookies').addEventListener('click', function () {
+        localStorage.setItem('cookieConsent', 'accepted');
+        cookieBanner.style.display = 'none';
+    });
+
+    document.getElementById('declineCookies').addEventListener('click', function () {
+        localStorage.setItem('cookieConsent', 'declined');
+        cookieBanner.style.display = 'none';
+    });
+});
+
 });
 
 
