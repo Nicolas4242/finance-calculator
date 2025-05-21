@@ -508,7 +508,7 @@
     // if (getCookie('cookieConsent')) {
     //     document.getElementById('cookie-popup').style.display = 'block';
     // }
-    if (!getCookie('cookieConsent')) {
+    if (getCookie('cookieConsent')) {
         document.getElementById('cookie-popup').style.display = 'block';
     }
 
