@@ -511,10 +511,14 @@
     if (!getCookie('cookieConsent')) {
         document.getElementById('cookie-popup').style.display = 'block';
     }
+    if (getCookie('cookieConsent') === 'accepted') {
+        loadGoogleAnalytics();  // <-- This runs GA only when user accepts cookies
+    }
 
     document.getElementById('accept-cookies').addEventListener('click', () => {
         setCookie('cookieConsent', 'accepted', 365);
         document.getElementById('cookie-popup').style.display = 'none';
+        loadGoogleAnalytics();  // <-- This runs GA only when user accepts cookies
     });
 
     document.getElementById('decline-cookies').addEventListener('click', () => {
