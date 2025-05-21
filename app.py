@@ -5,13 +5,13 @@ app = Flask(__name__)
 @app.route('/')
 def loan():
     return render_template('loan.html', request_form={}, loan_result=None, monlthly_loan_result=None)
-def investment():
-    return render_template('investment.html', request_form={}, interest_result=None)
-def retirement_savings():
-    return render_template('retirement_savings.html', request_form={}, monthly_saving_needed=None,
-        total_savings_estimate=None, future_result=None)
-def networth():
-    return render_template('networth.html', request_form={}, networth_result=None)
+# def investment():
+#     return render_template('investment.html', request_form={}, interest_result=None)
+# def retirement_savings():
+#     return render_template('retirement_savings.html', request_form={}, monthly_saving_needed=None,
+#         total_savings_estimate=None, future_result=None)
+# def networth():
+#     return render_template('networth.html', request_form={}, networth_result=None)
 
 @app.route('/calculator', methods=['GET','POST'])
 def calculator():
@@ -154,6 +154,32 @@ def networth():
         }
     return render_template('networth.html', networth_result=networth_result, request_form=request_form, active='networth')
 
+from flask import Response
+from datetime import date
+
+@app.route('/sitemap.xml', methods=['GET'])
+def sitemap():
+    pages = [
+        "https://finance-calculator-645x.onrender.com/",
+        "https://finance-calculator-645x.onrender.com/calculator",
+        "https://finance-calculator-645x.onrender.com/loan",
+        "https://finance-calculator-645x.onrender.com/retirement_savings",
+        "https://finance-calculator-645x.onrender.com/networth"
+    ]
+    today = date.today().isoformat()
+
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for page in pages:
+        xml += f"  <url>\n"
+        xml += f"    <loc>{page}</loc>\n"
+        xml += f"    <lastmod>{today}</lastmod>\n"
+        xml += f"    <changefreq>monthly</changefreq>\n"
+        xml += f"    <priority>0.8</priority>\n"
+        xml += f"  </url>\n"
+    xml += "</urlset>"
+
+    return Response(xml, mimetype='application/xml')
 
 if __name__ == '__main__':
     app.run(debug=False)
