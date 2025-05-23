@@ -21,9 +21,26 @@ def calculator():
         amount = float(request.form['amount'])
         rate = float(request.form['rate'])
         years = float(request.form['years'])
-        request_form = {"amount": amount, "rate": rate, "years": years}
-        interest_result = round(amount * (1 + rate / 100) ** years, 2)
-    return render_template('investment.html', interest_result=interest_result, request_form=request_form, active= 'interest')
+        monthly_invest = float(request.form['monthly_investment'])
+
+        request_form = {
+            "amount": amount,
+            "rate": rate,
+            "years": years,
+            "monthly_investment": monthly_invest
+        }
+
+        r = rate / 100  # Convert percentage to decimal
+        n = 12  # Compounded monthly
+        t = years
+        P = amount
+        PMT = monthly_invest
+
+        compound_interest = P * (1 + r / n) ** (n * t)
+        future_value_of_contributions = PMT * (((1 + r / n) ** (n * t) - 1) / (r / n))
+        interest_result = round(compound_interest + future_value_of_contributions, 2)
+
+    return render_template('investment.html', interest_result=interest_result, request_form=request_form, active='interest')
 
 @app.route('/loan', methods=['GET','POST'])
 def loan_calculator():

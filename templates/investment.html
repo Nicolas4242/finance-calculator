@@ -5,6 +5,8 @@
 <form method="POST" action="/calculator">
     <input type="number" name="amount" placeholder="Initial Amount (€)" step="100" required
            value="{{ request_form['amount'] if request_form and 'amount' in request_form else '' }}"><br>
+       <inmut type="number" name="monthly_investment" placeholder="monthly investment (€)" step="1" required
+           value="{{ request_form['monthly_investment'] if request_form and 'monthly_investment' in request_form else '' }}"><br>
     <input type="number" name="rate" placeholder="Annual Rate (%)" step="1" required
            value="{{ request_form['rate'] if request_form and 'rate' in request_form else '' }}"><br>
     <input type="number" name="years" placeholder="Years" required
