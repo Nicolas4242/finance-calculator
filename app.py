@@ -19,18 +19,20 @@ def calculator():
     yearly_values = []
     request_form = {}
     year_labels = []
+    total_spent = 0
     if request.method == 'POST':
         amount = float(request.form['amount'])
         rate = float(request.form['rate'])
         years = int(request.form['years'])
         monthly_invest = float(request.form['monthly_investment'])
         year_labels = list(range(1, years + 1))
-
+        total_spent = amount + (monthly_invest * 12 * years)
         request_form = {
             "amount": amount,
             "rate": rate,
             "years": years,
             "monthly_investment": monthly_invest
+            
         }
 
         r = rate / 100
@@ -51,7 +53,8 @@ def calculator():
         interest_result=interest_result,
         request_form=request_form,
         yearly_values=yearly_values,
-        year_labels=year_labels
+        year_labels=year_labels,
+        total_spent=total_spent
     )
 
 @app.route('/loan', methods=['GET','POST'])
