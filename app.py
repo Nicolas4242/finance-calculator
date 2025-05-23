@@ -159,7 +159,7 @@ def retirement_savings():
             P = current_savings
             PMT = monthly_payment
 
-            for year in range(1, years + 1):
+            for year in range(1, int(years) + 1):
                 compound = P * (1 + r / n) ** (n * year)
                 contribution = PMT * (((1 + r / n) ** (n * year) - 1) / (r / n))
                 total = compound + contribution
