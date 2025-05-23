@@ -16,12 +16,15 @@ def loan():
 @app.route('/calculator', methods=['GET','POST'])
 def calculator():
     interest_result = None
+    yearly_values = []
     request_form = {}
+    year_labels = []
     if request.method == 'POST':
         amount = float(request.form['amount'])
         rate = float(request.form['rate'])
-        years = float(request.form['years'])
+        years = int(request.form['years'])
         monthly_invest = float(request.form['monthly_investment'])
+        year_labels = list(range(1, years + 1))
 
         request_form = {
             "amount": amount,
@@ -30,17 +33,26 @@ def calculator():
             "monthly_investment": monthly_invest
         }
 
-        r = rate / 100  # Convert percentage to decimal
-        n = 12  # Compounded monthly
-        t = years
+        r = rate / 100
+        n = 12
         P = amount
         PMT = monthly_invest
 
-        compound_interest = P * (1 + r / n) ** (n * t)
-        future_value_of_contributions = PMT * (((1 + r / n) ** (n * t) - 1) / (r / n))
-        interest_result = round(compound_interest + future_value_of_contributions, 2)
+        for year in range(1, years + 1):
+            compound = P * (1 + r / n) ** (n * year)
+            contribution = PMT * (((1 + r / n) ** (n * year) - 1) / (r / n))
+            total = compound + contribution
+            yearly_values.append(round(total, 2))
 
-    return render_template('investment.html', interest_result=interest_result, request_form=request_form, active='interest')
+        interest_result = yearly_values[-1]
+
+    return render_template(
+        'investment.html',
+        interest_result=interest_result,
+        request_form=request_form,
+        yearly_values=yearly_values,
+        year_labels=year_labels
+    )
 
 @app.route('/loan', methods=['GET','POST'])
 def loan_calculator():
