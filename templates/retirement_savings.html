@@ -22,6 +22,7 @@
         {% if monthly_saving_needed is not none %}
             <p><strong>Monthly payment:</strong> {{ monthly_saving_needed }} €</p>
         {% endif %}
+
     </div>
 
     <!-- Growth Calculator -->
@@ -41,6 +42,44 @@
         </form>
         {% if future_result is not none %}
             <p><strong>Estimated total savings:</strong> {{ future_result }} €</p>
+        {% endif %}
+                {% if yearly_values %}
+            <canvas id="investmentChart" width="400" height="200"></canvas>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                const yearlyValues = JSON.parse('{{ yearly_values | tojson | safe }}');
+
+
+                const numYears = yearlyValues.length;
+                const labels = [...Array(numYears).keys()].map(x => x + 1);
+
+                const ctx = document.getElementById('investmentChart').getContext('2d');
+                const chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Investment Value (€)',
+                            data: yearlyValues,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1,
+                            fill: true,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                title: { display: true, text: 'Year' }
+                            },
+                            y: {
+                                title: { display: true, text: 'Value (€)' },
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
         {% endif %}
     </div>
 </div>

@@ -83,7 +83,7 @@ def retirement_savings():
     total_savings_estimate = None
     future_result = None  # For template
     request_form = {}
-
+    yearly_values = []
     if request.method == 'POST':
         form_type = request.form.get('form_type')
 
@@ -154,11 +154,22 @@ def retirement_savings():
                 )
             else:
                 future_result = round(current_savings + monthly_payment * months, 2)
+            r = annual_rate / 100
+            n = 12
+            P = current_savings
+            PMT = monthly_payment
+
+            for year in range(1, years + 1):
+                compound = P * (1 + r / n) ** (n * year)
+                contribution = PMT * (((1 + r / n) ** (n * year) - 1) / (r / n))
+                total = compound + contribution
+                yearly_values.append(round(total, 2))
 
     return render_template('retirement_savings.html',
                            monthly_saving_needed=monthly_saving_needed,
                            future_result=future_result,
                            request_form=request_form,
+                           yearly_values=yearly_values,
                            active='retirement')
 @app.route('/networth', methods=['GET','POST'])
 def networth():
