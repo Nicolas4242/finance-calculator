@@ -15,13 +15,14 @@
 </form>
 
 {% if interest_result is not none %}
-    <p><strong>Future Value:</strong> {{ interest_result }} €</p>
+    <p><strong>Future Value:</strong> {{ "{:,.2f}".format(interest_result).replace(",", " ") }} €</p>
 {% endif %}
 {% if yearly_values %}
     <canvas id="investmentChart" width="400" height="200"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const yearlyValues = {{ yearly_values | tojson | safe }};
+
 
         const numYears = yearlyValues.length;
         const labels = [...Array(numYears).keys()].map(x => x + 1);
