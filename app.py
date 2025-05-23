@@ -171,6 +171,7 @@ def retirement_savings():
                            request_form=request_form,
                            yearly_values=yearly_values,
                            active='retirement')
+
 @app.route('/networth', methods=['GET','POST'])
 def networth():
     networth_result = None
