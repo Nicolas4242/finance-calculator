@@ -16,7 +16,7 @@
 
 {% if interest_result is not none %}
     <p><strong>Future Value:</strong> {{ "{:,.2f}".format(interest_result).replace(",", " ") }} €</p>
-    <p><strong>Total invested:</strong>{{"{:,.2f}".format(total_spent).replace(",", " ")}} € </p>
+    <p><strong>Total invested:</strong> {{"{:,.2f}".format(total_spent).replace(",", " ")}} € </p>
 {% endif %}
 {% if yearly_values %}
     <canvas id="investmentChart" width="400" height="200"></canvas>
